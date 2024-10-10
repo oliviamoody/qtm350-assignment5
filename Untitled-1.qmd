@@ -1,0 +1,19 @@
+---
+title: "QTM 350 Assignment #5"
+author: "Olivia Moody"
+date: "10-09,2024"
+date-format: "MMMM D, YYYY"
+format: 
+  html:
+  pdf:
+    fig-width: 3
+    fig-height: 2
+    margins: 2in
+---
+
+# Analysing South East Asia Through the Lens of the World Development Index
+
+## What Countries are in South East Asia?
+South East Asian countries consist of Singapore, Malaysia, Indoneisa, Vietnam, Laos, Thailand, Myanmar, Cambodia, Brunei and the Phillipines. Unfortunately, Brunei is not included in the WDI Dataset that this analysis is based upon and will not be included in this analysis 
+
+## How Many People Live in South East Asia?

@@ -1,0 +1,138 @@
+---
+title: "QTM 350 Assignment 5 Presentation"
+author: "Olivia Moody"
+date: "2024-10-09"
+format:
+  revealjs:
+    slide-level: 2
+    theme: moon
+    transition: slide
+    scrollable: true
+    code-line-numbers: true
+    embed-resources: true
+editor:
+  render-on-save: true
+---
+
+```{python}
+#| echo: false
+import pandas as pd
+import matplotlib.pyplot as plt
+
+wdi = pd.read_csv('/Users/oliviamoody/Documents/GitHub/qtm350/assignments/wdi.csv')
+
+#Brunei is not in WDI
+SouthEastAsia_wdi=wdi.query("(country==['Singapore','Malaysia','Indonesia','Viet Nam','Lao PDR','Thailand','Myanmar','Philippines','Cambodia'])")
+
+```
+
+## Countries in South East Asia and their Population
+
+:::{style="font-size: 24px;"}
+:::{.columns}
+:::{.column width="30%"}
+- Malaysia
+- Singapore
+- Indonesia
+- Thailand
+- Vietnam
+- Laos
+- Myanmar
+- Philippines
+- Cambodia
+  - Brunei but it is not included in the WDI Database
+:::
+
+:::{.column width="70%"}
+```{python}
+#| echo: false
+table_data = {
+    "Country": [
+        "Malaysia", 
+        "Cambodia", 
+        "Indonesia", 
+        "Myanmar", 
+        "Singapore", 
+        "Thailand", 
+        "Laos", 
+        "Philippines", 
+        "Vietnam",
+        "Total"
+    ],
+    "Population": [
+        33938221,
+        16767842,
+        275501339,
+        54179306,
+        5637022,
+        71697030,
+        7529475,
+        115559009,
+        98186856,
+        678996100
+    ]
+}
+
+df = pd.DataFrame(table_data)
+
+df.style.set_caption("Population by Country").set_table_attributes('id="population-table"')
+```
+
+:::
+:::
+:::
+
+# Immunisation Rate and Life Expectancy 
+:::{style="font-size: 24px;"}
+:::{.columns}
+:::{.column width="30%"}
+The relationship between measles immunisation rate varied across South East Asian countries. While it was generally seen that countries with higher percentage of their population immunised for Measles had higher life expectancies, there was a few key outliers. In fact, the Philippines, which had the lowest immunisation rate, ranked 5th of of the nine South East Asian countries on life expectancy. 
+:::
+
+:::{.column width="70%"}
+```{python}
+#| echo: false
+plt.figure(figsize=(10, 6))
+plt.scatter(SouthEastAsia_wdi['measles_immunisation_rate'], SouthEastAsia_wdi['life_expectancy'], alpha=0.7)
+plt.title('The Relationship between the Measles Immunisation Rate and the Life Expectancy of People in South East Asia')
+plt.xlabel('Measles Immunisation Rate (%)')
+plt.ylabel('Life Expectancy (years)')
+plt.grid(True)
+plt.savefig('Immunisation_LifeExpect_SEA.png', format='png', dpi=300)  
+plt.figtext(0.5, -0.05, 'Source: World Development Indicators', ha='center', va='center', fontsize=10)
+plt.show()
+```
+
+:::
+:::
+:::
+
+# GDP Per Capita and Life Expectancy
+:::{style="font-size: 24px;"}
+:::{.columns}
+:::{.column width="30%"}
+Generally, life expectancy is higher for people in South East Asia in countries with higher GDP Per capita. When analysing GDP Per Capita it should be noted that the GDP Per Capita of Singapore, which is not shown on the below graph, is $88,428 and therefore seven times the GDP per capita of the next richest nation of Malaysia. Unsuprisingly, Singapore also had the highest life expectancy of all South East Asian Countries.
+:::
+
+:::{.column width="70%"}
+```{python}
+#| echo: false
+plt.figure(figsize=(10, 6))
+plt.scatter(SouthEastAsia_wdi['gdp_per_capita'], SouthEastAsia_wdi['life_expectancy'], alpha=0.7)
+plt.title('The Relationship of GDP Per Capita and Life Expectancy in South East Asia')
+plt.xlabel('GDP Per Capita ($)')
+plt.ylabel('Life Expectancy (years)')
+plt.xlim(0, 15000)
+plt.grid(True)
+plt.savefig('GDP_LifeExpect_SEA.png', format='png', dpi=300) 
+plt.figtext(0.5, -0.05, 'Source: World Development Indicators', ha='center', va='center', fontsize=10) 
+plt.show()
+```
+
+:::
+:::
+:::
+
+
+# Thank you! 
+This is my conclusion slide

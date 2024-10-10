@@ -1,0 +1,118 @@
+---
+title: "QTM 350 Assignment #5"
+author: "Olivia Moody"
+date: "10-09,2024"
+date-format: "MMMM D, YYYY"
+bibliography: references.bib
+format: 
+  html: default
+  pdf: default
+---
+```{python}
+#| echo: false
+import pandas as pd
+import matplotlib.pyplot as plt
+```
+```{python}
+#| echo: false
+wdi = pd.read_csv('/Users/oliviamoody/Documents/GitHub/qtm350-assignment5/wdi.csv')
+
+#Brunei is not in WDI
+SouthEastAsia_wdi=wdi.query("(country==['Singapore','Malaysia','Indonesia','Viet Nam','Lao PDR','Thailand','Myanmar','Philippines','Cambodia'])")
+```
+
+# Analysing South East Asia Through the Lens of the World Development Index
+
+## What Countries are in South East Asia?
+South East Asia is usually defined as the countries of Singapore, Malaysia, Indoneisa, Vietnam, Laos, Thailand, Myanmar, Cambodia, Brunei and the Phillipines though some argue over this definition and general definitions of what makes up Asia's regions [@9799c773-c2de-354f-ae67-ae411adb75f3]. While we wil use this definition for this report, Brunei will not be included as the WDI Dataset does not have any data for that country.
+
+## How Many People Live in South East Asia?
+Based on WDI data which does not include Brunei, there are 678,996,100 total people living in South East Asia. Similiar to concerns in Western nations governments have recently become concerned with the sharp fall in total fertility rate [@b0efd158-c56b-3c3f-894e-14d1a9597982]. 
+
+```{python}
+#| echo: false
+#| 
+total_population_sum = SouthEastAsia_wdi['total_population'].sum()
+print(total_population_sum)
+```
+```{python}
+#| echo: false
+table_data = {
+    "Country": [
+        "Malaysia", 
+        "Cambodia", 
+        "Indonesia", 
+        "Myanmar", 
+        "Singapore", 
+        "Thailand", 
+        "Laos", 
+        "Philippines", 
+        "Vietnam",
+        "Total"
+    ],
+    "Population": [
+        33938221,
+        16767842,
+        275501339,
+        54179306,
+        5637022,
+        71697030,
+        7529475,
+        115559009,
+        98186856,
+        678996100
+    ]
+}
+
+df = pd.DataFrame(table_data)
+
+df.style.set_caption("Population by Country").set_table_attributes('id="population-table"')
+```
+
+Exact numbers for every South East Asian Country's can be found in this Table \@ref(population-table).
+
+```{python}
+#| echo: false
+
+plt.figure(figsize=(10, 6))
+plt.bar(SouthEastAsia_wdi['country'], SouthEastAsia_wdi['total_population'], color='skyblue')
+plt.title('Population of South East Asia by Country')
+plt.xlabel('Country')
+plt.ylabel('Total Population')
+plt.xticks(rotation=45)
+plt.grid(axis='y')
+plt.savefig('SEA_Population.png', format='png', dpi=300)  
+plt.figtext(0.5, -0.05, 'Source: World Development Indicators', ha='center', va='center', fontsize=10)
+plt.show()
+```
+
+## What is the relationship between GDP Per Capita and Life Expectancy in South East Asian Countries?
+Generally, life expectancy is higher for people in South East Asia in countries with higher GDP Per capita. When analysing GDP Per Capita it should be noted that the GDP Per Capita of Singapore, which is not shown on the below graph, is $88,428 and therefore seven times the GDP per capita of the next richest nation of Malaysia. Unsuprisingly, Singapore also had the highest life expectancy of all South East Asian Countries.
+```{python}
+#| echo: false
+plt.figure(figsize=(10, 6))
+plt.scatter(SouthEastAsia_wdi['gdp_per_capita'], SouthEastAsia_wdi['life_expectancy'], alpha=0.7)
+plt.title('The Relationship of GDP Per Capita and Life Expectancy in South East Asia')
+plt.xlabel('GDP Per Capita ($)')
+plt.ylabel('Life Expectancy (years)')
+plt.xlim(0, 15000)
+plt.grid(True)
+plt.savefig('GDP_LifeExpect_SEA.png', format='png', dpi=300) 
+plt.figtext(0.5, -0.05, 'Source: World Development Indicators', ha='center', va='center', fontsize=10) 
+plt.show()
+```
+
+## What is the the relationship between Measles Immunisation Rate and Life Expectancy in South East Asian Countries? 
+The relationship between measles immunisation rate varied across South East Asian countries. While it was generally seen that countries with higher percentage of their population immunised for Measles had higher life expectancies, there was a few key outliers. In fact, the Philippines, which had the lowest immunisation rate, ranked 5th of of the nine South East Asian countries on life expectancy. 
+```{python}
+#| echo: false
+plt.figure(figsize=(10, 6))
+plt.scatter(SouthEastAsia_wdi['measles_immunisation_rate'], SouthEastAsia_wdi['life_expectancy'], alpha=0.7)
+plt.title('The Relationship between the Measles Immunisation Rate and the Life Expectancy of People in South East Asia')
+plt.xlabel('Measles Immunisation Rate (%)')
+plt.ylabel('Life Expectancy (years)')
+plt.grid(True)
+plt.savefig('Immunisation_LifeExpect_SEA.png', format='png', dpi=300)  
+plt.figtext(0.5, -0.05, 'Source: World Development Indicators', ha='center', va='center', fontsize=10)
+plt.show()
+```
